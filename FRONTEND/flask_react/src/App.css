@@ -1,0 +1,48 @@
+.App {
+  display: flex;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+.videoButtons {
+  display: flex;
+  flex-direction: column; /* Display buttons in a column */
+  align-items: stretch; /* Align buttons to the left */
+  height: 100vh;
+  padding: 20px; /* Add some padding for spacing */
+  background-color: #d6d0d0; /* Optional: Add a background color to the button container */
+  overflow-y: auto;
+}
+
+.button {
+  font-size: 18px;
+  padding: 20px 20px;
+  margin-bottom: 10px;
+  border: 2px solid #000000;
+  border-radius: 10px; /* Add rounded edges */
+  background-color: #d6d0d0;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+.displayedVideo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(97, 97, 96);
+  position: relative;
+  overflow: hidden; /* Hide any overflowing content */
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
