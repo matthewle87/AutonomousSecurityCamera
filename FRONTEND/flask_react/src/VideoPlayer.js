@@ -4,8 +4,7 @@ import ReactPlayer from 'react-player'
 class VideoPlayer extends Component {
     render () {
         const { videoUrl } = this.props;
-        console.log(videoUrl);
-        console.log('yes this is happening');
+        const time = videoUrl.split(/[-.]/);
         return (
         <div className='player-wrapper'>
             <ReactPlayer
@@ -14,8 +13,8 @@ class VideoPlayer extends Component {
             width='100%'
             height='100%'
             controls = {true}
-  
             />
+            {`${time[1]}/${time[0]}/${time[2]} ${time[3]}:${time[4]}:${time[5]}`}
         </div>
         )
     }

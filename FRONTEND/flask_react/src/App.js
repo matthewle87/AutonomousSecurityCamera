@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
-import logo from './logo.svg';
 import './App.css';
-import VideoPlayer from './VideoPlayer'
+import VideoPlayer from './VideoPlayer.js'
+import SearchBar from './SearchBar.jsx'
 
 function App() {
 
   const [videoNames, setVideoNames] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   
   function showVideo(vidName){
-    console.log(vidName)
     setSelectedVideo(vidName);
   }
 
+  
   useEffect(() => {
     axios({
       method: "GET",
@@ -24,9 +25,9 @@ function App() {
       setVideoNames({
         videos: res.videos.reverse()
       });
-      res.videos.forEach(vid => {
-        console.log(vid);
-      });
+      if (res.videos.length > 0){
+        showVideo(res.videos[0])
+      }
     })
     .catch((error) => {
       if (error.response) {
@@ -37,6 +38,9 @@ function App() {
     });
   }, []);
 
+  const filteredVideos = videoNames?.videos.filter((videoName) =>
+  videoName.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
 
   return (
 
@@ -44,16 +48,27 @@ function App() {
 
 
     <div className="App">
+
       <div className = 'videoButtons'>
-        {videoNames && videoNames.videos.map((videoName, index) => (
-          <button 
-            key={index} 
-            className = 'button'
-            onClick ={() => showVideo(videoNames.videos[index])}>
-            {videoName}
-          </button>
-        ))}
-      </div>
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+        {filteredVideos && filteredVideos.map((videoName, index) => {
+            const time = videoName.split(/[-.]/);
+
+            return (
+              <button
+                key={index}
+                className="button"
+                onClick={() => showVideo(videoName)}
+              >
+                Motion Detected
+                <br />
+                {`${time[1]}/${time[0]}/${time[2]}`}
+                <br />
+                {`${time[3]}:${time[4]}:${time[5]}`}
+              </button>
+            );
+          })}
+        </div>
       {selectedVideo && (
         <div className = 'displayedVideo'>
           <VideoPlayer videoUrl={selectedVideo} />

@@ -71,6 +71,15 @@ def put():
     db.session.commit()
     return "Successful"
 
+@app.route('/delete/<string:location>', methods = ['DELETE'])
+def delete(location):
+    result = VideoModel.query.filter_by(name = location).first()
+    if result:
+        VideoModel.query.filter_by(name = location).delete()
+        db.session.commit()
+        return "Successful"
+    abort(409, message = 'Video location was not found in the database.')
+
 if __name__ == "__main__":
     app.run(debug = True)
     print()
